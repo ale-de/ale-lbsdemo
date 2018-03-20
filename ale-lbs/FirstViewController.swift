@@ -75,7 +75,7 @@ class FirstViewController: UIViewController, NAOSensorsDelegate, NAOLocationHand
         UserDefaults.standard.register(defaults: appDefaults)
     }
     @objc func settingsChanged(){
-        let defaults:UserDefaults = UserDefaults.standard
+        //let defaults:UserDefaults = UserDefaults.standard
         //let api:String = defaults.string(forKey: "RAINBOW-EMAIL")!
         //debugPrint("api key:", api)
     }
