@@ -52,7 +52,7 @@ class FirstViewController: UIViewController, NAOSensorsDelegate, NAOLocationHand
     }
     
     @objc func didLogin(notification: NSNotification) {
-        let cts:[Contact] = ServicesManager.sharedInstance().contactsManagerService.searchContacts(withPattern: <#T##String!#>)
+        let cts:[Contact] = ServicesManager.sharedInstance().contactsManagerService.searchContacts(withPattern: "")
         debugPrint(cts)
         DispatchQueue.main.async {self.delegate?.logMsg(text: "Rainbow login successful")}
     }
