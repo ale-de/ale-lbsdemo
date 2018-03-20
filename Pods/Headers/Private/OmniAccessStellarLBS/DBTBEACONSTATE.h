@@ -1,0 +1,1 @@
+../../../OmniAccessStellarLBS/Pod/Classes/DBTBEACONSTATE.h

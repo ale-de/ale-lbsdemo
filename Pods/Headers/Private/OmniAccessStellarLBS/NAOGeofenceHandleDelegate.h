@@ -1,0 +1,1 @@
+../../../OmniAccessStellarLBS/Pod/Classes/NAOGeofenceHandleDelegate.h

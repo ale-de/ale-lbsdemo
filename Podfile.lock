@@ -1,0 +1,12 @@
+PODS:
+  - OmniAccessStellarLBS (4.5.0)
+
+DEPENDENCIES:
+  - OmniAccessStellarLBS (~> 4.5)
+
+SPEC CHECKSUMS:
+  OmniAccessStellarLBS: 0b495cb538b39d5fa2d6aaaebc09cd9c39e61854
+
+PODFILE CHECKSUM: 3564f4e65987d063b5ba0764d7f5b8daa13cd070
+
+COCOAPODS: 1.4.0
