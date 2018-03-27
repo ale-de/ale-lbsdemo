@@ -16,6 +16,7 @@ class FirstViewController: UIViewController, NAOSensorsDelegate, NAOLocationHand
 
     //Variables
     var nao:Nao = Nao();
+    var bot:Contact = Contact();
     weak var delegate: FirstViewControllerDelegate?
     
     //Outlets
@@ -23,7 +24,25 @@ class FirstViewController: UIViewController, NAOSensorsDelegate, NAOLocationHand
     @IBOutlet weak var pvGeoFenceRange: UIProgressView!
     @IBOutlet weak var lblRSSI: UILabel!
     @IBOutlet weak var pvRSSI: UIProgressView!
+    @IBOutlet weak var txtFindName: UITextField!
     
+    //Actions
+    @IBAction func btnTest_Clicked(_ sender: Any) {
+        let cts:[Contact] = ServicesManager.sharedInstance().contactsManagerService.searchContacts(withPattern: "bot1")
+        debugPrint(cts[0])
+        let conversation = ServicesManager.sharedInstance().conversationsManagerService.getConversationWithPeerJID(cts[0].jid)
+        ServicesManager.sharedInstance().conversationsManagerService.sendMessage("Test message", fileAttachment: nil, to: conversation, completionHandler: nil, attachmentUploadProgressHandler: nil)
+    }
+    
+    func sendRainbowMsgToBot(txt: String) {
+        let conversation = ServicesManager.sharedInstance().conversationsManagerService.getConversationWithPeerJID(bot.jid)
+        ServicesManager.sharedInstance().conversationsManagerService.sendMessage(txt, fileAttachment: nil, to: conversation, completionHandler: nil, attachmentUploadProgressHandler: nil)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        txtFindName.resignFirstResponder()
+        return true
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -52,9 +71,11 @@ class FirstViewController: UIViewController, NAOSensorsDelegate, NAOLocationHand
     }
     
     @objc func didLogin(notification: NSNotification) {
-        let cts:[Contact] = ServicesManager.sharedInstance().contactsManagerService.searchContacts(withPattern: "")
-        debugPrint(cts)
         DispatchQueue.main.async {self.delegate?.logMsg(text: "Rainbow login successful")}
+        let cts:[Contact] = ServicesManager.sharedInstance().contactsManagerService.searchContacts(withPattern: "bot1")
+        bot = cts[0]
+        debugPrint(bot)
+
     }
     @objc func didFailedToAuthenticate(notification: NSNotification) {
         DispatchQueue.main.async {self.delegate?.logMsg(text: "Rainbow auth failed")}
@@ -150,9 +171,11 @@ class FirstViewController: UIViewController, NAOSensorsDelegate, NAOLocationHand
         case "RANGE-OUT":
             pvGeoFenceRange.setProgress(0.0, animated: true)
             lblGeoFenceName.text = "None"
+            sendRainbowMsgToBot(txt: "{geofence:'" + alertInfo[0] + "',withEvent:'" + alertInfo[1] + "'}")
             break
         case "RANGE-NEAR":
             pvGeoFenceRange.setProgress(0.85, animated: true)
+            sendRainbowMsgToBot(txt: "{geofence:'" + alertInfo[0] + "',withEvent:'" + alertInfo[1] + "'}")
             break
         case "RANGE-FAR":
             pvGeoFenceRange.setProgress(0.5, animated: true)
