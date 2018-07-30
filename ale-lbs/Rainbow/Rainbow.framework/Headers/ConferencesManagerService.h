@@ -29,9 +29,23 @@ FOUNDATION_EXPORT NSString *const kConferencesManagerDidRemoveConference;
 FOUNDATION_EXPORT NSString *const kConferenceKey;
 FOUNDATION_EXPORT NSString *const kConferenceChangedAttributesKey;
 
+FOUNDATION_EXPORT NSString *const ConferenceManagerErrorDomainAttach;
+FOUNDATION_EXPORT NSString *const ConferenceManagerErrorDomainStart;
+FOUNDATION_EXPORT NSString *const ConferenceManagerErrorDomainJoin;
+FOUNDATION_EXPORT NSString *const ConferenceManagerErrorDomainSnapshot;
+
 @interface ConferencesManagerService : NSObject
 
-typedef void (^ConferenceManagerCompletionHandler) (NSError *error);
+typedef void (^ConferenceManagerCreateConferenceCompletionHandler) (NSError *error);
+typedef void (^ConferenceManagerUpdateConferenceCompletionHandler) (NSError *error);
+typedef void (^ConferenceManagerFetchConferenceSnapshotCompletionHandler) (NSError *error);
+typedef void (^ConferenceManagerDeleteConferenceCompletionHandler) (NSError *error);
+typedef void (^ConferenceManagerJoinConferenceCompletionHandler) (NSError *error);
+typedef void (^ConferenceManagerStartConferenceCompletionHandler) (NSError *error);
+typedef void (^ConferenceManagerStartAndJoinConferenceCompletionHandler) (NSError *error);
+typedef void (^ConferenceManagerTerminateConferenceCompletionHandler) (NSError *error);
+typedef void (^ConferenceManagerInviteParticipantToJoinConferenceCompletionHandler) (NSError *error);
+typedef void (^ConferenceManagerCancelInvitationToJoinConferenceCompletionHandler) (NSError *error);
 
 @property (nonatomic, readonly) NSArray<Conference *> *conferences;
 
@@ -52,7 +66,7 @@ typedef void (^ConferenceManagerCompletionHandler) (NSError *error);
  *  @param  endDate             the end date of the meeting
  *  @param  completionHandler   use in return of the create action
  */
--(void) createConferenceForRoom:(Room *) room startDate:(NSDate *) startDate endDate:(NSDate*) endDate completionHandler:(ConferenceManagerCompletionHandler) completionHandler;
+-(void) createConferenceForRoom:(Room *) room startDate:(NSDate *) startDate endDate:(NSDate*) endDate completionHandler:(ConferenceManagerCreateConferenceCompletionHandler) completionHandler;
 
 /**
  *  Update the given conference with the new startDate and the new endDate
@@ -61,7 +75,7 @@ typedef void (^ConferenceManagerCompletionHandler) (NSError *error);
  *  @param  endDate             The new end date
  *  @param  completionHandler   use in return of the update action
  */
--(void) updateConferenceForRoom:(Room *) room startDate:(NSDate *) startDate endDate:(NSDate *) endDate completionHandler:(ConferenceManagerCompletionHandler) completionHandler;
+-(void) updateConferenceForRoom:(Room *) room startDate:(NSDate *) startDate endDate:(NSDate *) endDate completionHandler:(ConferenceManagerUpdateConferenceCompletionHandler) completionHandler;
 
 /**
  * Request conference details for the given conference
@@ -70,7 +84,9 @@ typedef void (^ConferenceManagerCompletionHandler) (NSError *error);
  *  @param conference           the conference that we want more details
  *  @param completionHandler    the completionHandler use to return error in case there is one
  */
--(void) fetchConferenceDetails:(Conference *) conference completionBlock:(ConferenceManagerCompletionHandler) completionHandler;
+//-(void) fetchConferenceDetails:(Conference *) conference completionBlock:(ConferenceManagerFetchDetailsConferenceCompletionHandler) completionHandler;
+
+-(void) fetchConferenceSnapshot:(Conference *) conference completionBlock:(ConferenceManagerFetchConferenceSnapshotCompletionHandler) completionHandler;
 
 /**
  * Delete a conference
@@ -78,22 +94,22 @@ typedef void (^ConferenceManagerCompletionHandler) (NSError *error);
  * @param conference        the conference to delete
  * @param completionHandler the block called at the completion
  */
--(void) deleteConference:(Conference *) conference completionBlock:(ConferenceManagerCompletionHandler) completionHandler;
+-(void) deleteConference:(Conference *) conference completionBlock:(ConferenceManagerDeleteConferenceCompletionHandler) completionHandler;
 
-/**
- * join a audio conference 
- *
- * @param conference        the conference to join
- * @param phoneNumber       phone number in E.164 format
- * @param role              the role in the conference : member or moderator
- * @param completionHandler the block called at the completion
- */
--(void) joinConference:(Conference *)conference phoneNumber:(NSString *) phoneNumber role:(ParticipantRole)role completionBlock:(ConferenceManagerCompletionHandler)completionHandler;
-
-/**
- * join a conference
- */
--(void) joinConference:(Conference *)conference role:(ParticipantRole)role completionBlock:(ConferenceManagerCompletionHandler) completionHandler;
+///**
+// * join a audio conference
+// *
+// * @param conference        the conference to join
+// * @param phoneNumber       phone number in E.164 format
+// * @param role              the role in the conference : member or moderator
+// * @param completionHandler the block called at the completion
+// */
+//-(void) joinConference:(Conference *)conference phoneNumber:(NSString *) phoneNumber role:(ParticipantRole)role completionBlock:(ConferenceManagerJoinConferenceCompletionHandler)completionHandler;
+//
+///**
+// * join a conference
+// */
+//-(void) joinConference:(Conference *)conference role:(ParticipantRole)role completionBlock:(ConferenceManagerJoinConferenceCompletionHandler) completionHandler;
 
 /**
  * disconnect the conference participant using its participant id
@@ -134,22 +150,15 @@ typedef void (^ConferenceManagerCompletionHandler) (NSError *error);
 -(void) unmuteAllParticipantsInConference:(Conference *) conference;
 
 /**
- * Initiate a audio conference
- *
- * @param conference the conference to start
- * @param completionHandler the block called at the completion
- */
--(void) startConference:(Conference *) conference completionHandler:(ConferenceManagerCompletionHandler) completionHandler;
-
-/**
  * Initiate, if needed, a audio conference then join it
  *
  * @param conference        the conference to join
+ * @param room              the room to join
  * @param phoneNumber       phone number in E.164 format
  * @param role              the role in the conference : member or moderator
  * @param completionHandler the block called at the completion
  */
--(void) startAndJoinConference:(Conference *)conference phoneNumber:(NSString *) phoneNumber role:(ParticipantRole)role completionBlock:(ConferenceManagerCompletionHandler)completionHandler;
+-(void) startAndJoinConference:(Conference *)conference inRoom:(Room *) room phoneNumber:(NSString *) phoneNumber role:(ParticipantRole)role completionBlock:(ConferenceManagerStartAndJoinConferenceCompletionHandler)completionHandler;
 
 /**
  * Terminate a audio conference
@@ -157,7 +166,7 @@ typedef void (^ConferenceManagerCompletionHandler) (NSError *error);
  * @param conference        the conference to terminate
  * @param completionHandler the block called at the completion
  */
--(void) terminateConference:(Conference *) conference completionHandler:(ConferenceManagerCompletionHandler) completionHandler;
+-(void) terminateConference:(Conference *) conference completionHandler:(ConferenceManagerTerminateConferenceCompletionHandler) completionHandler;
 
 /**
  *  Invite given participants to join the given conference
@@ -166,7 +175,7 @@ typedef void (^ConferenceManagerCompletionHandler) (NSError *error);
  *  @param  room                Room where participants are invited
  *  @param  completionHandler   The block invoked when the invitations are sent
  */
--(void) inviteParticipants:(NSArray <Participant *> *) participants toJoinConference:(Conference *) conference inRoom:(Room *) room completionBlock:(ConferenceManagerCompletionHandler) completionHandler;
+-(void) inviteParticipants:(NSArray <Participant *> *) participants toJoinConference:(Conference *) conference inRoom:(Room *) room completionBlock:(ConferenceManagerInviteParticipantToJoinConferenceCompletionHandler) completionHandler;
 
 /**
  *  Cancel invitations for the given conference sent to given participant list
@@ -175,5 +184,14 @@ typedef void (^ConferenceManagerCompletionHandler) (NSError *error);
  *  @param  room                Room where participatns are invited
  *  @param  completionHandler   The block invoked when the invitations are cancelled
  */
--(void) cancelInvitationSentToParticipants:(NSArray <Participant *> *) participants toConference:(Conference *) conference inRoom:(Room *) room completionBlock:(ConferenceManagerCompletionHandler) completionHandler;
+-(void) cancelInvitationSentToParticipants:(NSArray <Participant *> *) participants toConference:(Conference *) conference inRoom:(Room *) room completionBlock:(ConferenceManagerCancelInvitationToJoinConferenceCompletionHandler) completionHandler;
+/**
+ *  Return an array of ConferenceParticipant from the room participant list
+ *  @room room
+ */
+-(NSArray<ConferenceParticipant*> *) createConferenceParticipantsFromRoom: (Room*) room;
+
+-(void) subscribeToVideoSharedByConferencePublisher:(ConferencePublisher *) conferencePublisher inConference:(Conference *) conference;
+
+-(void) unsubscribeToVideoSharedBy:(ConferencePublisher *) conferencePublisher inConference:(Conference *) conference;
 @end

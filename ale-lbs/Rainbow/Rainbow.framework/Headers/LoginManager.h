@@ -15,7 +15,9 @@
 
 #import <Foundation/Foundation.h>
 
-/** @name Login manager Notifications */
+/**
+ *  @name Login manager Notifications
+ */
 /** Notification sent before starting login */
 FOUNDATION_EXPORT NSString *const kLoginManagerWillLogin;
 /** Login manager did login succeeded notification */
@@ -49,7 +51,9 @@ typedef void(^LoginManagerRegistrationCompletionHandler)(NSDictionary *jsonRespo
  *  It is also in charge of user account creation, or reset user password
  */
 @interface LoginManager : NSObject
-/** @name LoginManager properties */
+/**
+ *  @name LoginManager properties
+ */
 
 /**
  *  Connection status, `YES` when connection with server is enabled
@@ -71,7 +75,9 @@ typedef void(^LoginManagerRegistrationCompletionHandler)(NSDictionary *jsonRespo
  */
 @property (nonatomic, readonly) NSNumber *serverApiVersion;
 
-/** @name Login manager connection methods */
+/**
+ *  @name Login manager connection methods
+ */
 
 /**
  *  Defines username and password of the user to logged in
@@ -110,7 +116,9 @@ typedef void(^LoginManagerRegistrationCompletionHandler)(NSDictionary *jsonRespo
  */
 -(void) disconnect;
 
-/** @name User self registration or password reset */
+/**
+ *  @name User self registration or password reset
+ */
 
 /**
  *  This API allows to send a self-register email to a user. A temporary user token is generated and send in the email body. This token is required in the self register validation workflow
@@ -138,6 +146,16 @@ typedef void(^LoginManagerRegistrationCompletionHandler)(NSDictionary *jsonRespo
  *  @param completionHandler called when we got a server answer.
  */
 -(void) sendSelfRegisterRequestWithLoginEmail:(NSString *) loginEmail password:(NSString *) password invitationId:(NSString *) invitationId completionHandler:(LoginManagerRegistrationCompletionHandler) completionHandler;
+
+/**
+ * This api allow a user to complete the registration process in Rainbow application after receiving an invitation email with an invitationID.
+ *  @param loginEmail        User email address (used for login).
+ *  @param password          User password.
+ *  @param invitationID      Invitation ID received by email
+ *  @param visibility        Visibility
+ *  @param completionHandler called when we got a server answer.
+ */
+-(void) sendSelfRegisterRequestWithLoginEmail:(NSString *) loginEmail password:(NSString *) password invitationId:(NSString *) invitationId visibility:(NSString *) visibility completionHandler:(LoginManagerRegistrationCompletionHandler) completionHandler;
 
 /**
  * This api allow a user to complete the registration process in Rainbow application after receiving an invitation email with an invitationID.
@@ -171,9 +189,15 @@ typedef void(^LoginManagerRegistrationCompletionHandler)(NSDictionary *jsonRespo
  *  This api allows a user to change his Rainbow password.
  *
  *  @param oldPassword        Previous user password.
- *  @param newPassword        New user password
+ *  @param password           New user password
  *  @param completionHandler called when we got a server answer.
  */
 -(void) sendChangePassword:(NSString *) oldPassword newPassword:(NSString *) password completionHandler:(LoginManagerRegistrationCompletionHandler) completionHandler;
+
+
+/**
+ *  This api allows a user to delete his Rainbow account.
+ */
+-(void) deleteMyAccount;
 
 @end

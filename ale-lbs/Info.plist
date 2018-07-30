@@ -17,9 +17,56 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>amazonaws.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionMinimumTLSVersion</key>
+				<string>TLSv1.0</string>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+			<key>amazonaws.com.cn</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionMinimumTLSVersion</key>
+				<string>TLSv1.0</string>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+		</dict>
+	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This App will be using Bluetooth to access the beacons</string>
+	<key>NSCameraUsageDescription</key>
+	<string>ALE-LBS wants access to camera</string>
+	<key>NSContactsUsageDescription</key>
+	<string>ALE-LBS wants access to contacts</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>ALE-LBS needs location service</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>ALE-LBS needs location service</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>ALE-LBS wants access to microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>ALE-LBS wants access to photolibrary</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>INStartAudioCallIntent</string>
+		<string>INStartVideoCallIntent</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -51,51 +98,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>amazonaws.com</key>
-			<dict>
-				<key>NSThirdPartyExceptionMinimumTLSVersion</key>
-				<string>TLSv1.0</string>
-				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-				<false/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
-			<key>amazonaws.com.cn</key>
-			<dict>
-				<key>NSThirdPartyExceptionMinimumTLSVersion</key>
-				<string>TLSv1.0</string>
-				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-				<false/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>ALE-LBS needs location service</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>ALE-LBS needs location service</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>ALE-LBS wants access to camera</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>ALE-LBS wants access to microphone</string>
-	<key>NSContactsUsageDescription</key>
-	<string>ALE-LBS wants access to contacts</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>ALE-LBS wants access to photolibrary</string>
-    <key>NSUserActivityTypes</key>
-    <array>
-        <string>INStartAudioCallIntent</string>
-    </array>
 </dict>
 </plist>

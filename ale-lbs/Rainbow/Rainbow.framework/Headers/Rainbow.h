@@ -87,3 +87,7 @@ FOUNDATION_EXPORT const unsigned char RainbowVersionString[];
 #import <Rainbow/Channel.h>
 #import <Rainbow/ChannelPayload.h>
 #import <Rainbow/ChannelUser.h>
+#import <Rainbow/NomadicStatus.h>
+#import <Rainbow/ConferencePublisher.h>
+#import <Rainbow/Call.h>
+#import <Rainbow/CallProtocol.h>

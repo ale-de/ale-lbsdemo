@@ -25,7 +25,14 @@ typedef NS_ENUM(NSInteger, FileType) {
     FileTypeVideo,
     FileTypeOther
 };
+typedef NS_ENUM(NSInteger, FilterFileType) {
+    FilterFilesAll,
+    FilterTypeImage,
+    FilterTypeAudioORVideo,
+    FilterTypePDF,
+    FilterTypeMicrosoftOffice
 
+};
 @interface File : NSObject
 /**
  * file url on server
@@ -57,6 +64,11 @@ typedef NS_ENUM(NSInteger, FileType) {
 
 
 /**
+ * Data downloaded thumbnail from server
+ */
+@property (readonly) NSData *thumbnailData;
+
+/**
  * List of Peer (Contact or Room) allowed to see this file
  */
 @property (readonly) NSArray<Peer*> *viewers;
@@ -80,5 +92,22 @@ typedef NS_ENUM(NSInteger, FileType) {
  *  @return `YES` if the download is available on server side (at init we suppose that the download is available, when the download failed this boolean is set to `NO`
  */
 @property (readonly) BOOL isDownloadAvailable;
+
+/**
+ *  @return `YES` if the attchament is sent in offline Mode
+ */
+@property  BOOL isOfflineAttachment;
+
+/**
+ * File Tag 
+ */
+
+@property  NSString * tag;
+
+/**
+ * File value
+ */
+
+@property  float value;
 
 @end

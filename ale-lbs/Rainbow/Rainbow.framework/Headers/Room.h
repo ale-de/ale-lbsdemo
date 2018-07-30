@@ -61,7 +61,7 @@ typedef NS_ENUM(NSInteger, RoomVisibility) {
 /**
  *  Room creation date
  */
-@property (nonatomic, readonly) NSDate *creationDate;
+@property (atomic, readonly) NSDate *creationDate;
 
 /**
  *  @return `YES` if this room has been created by the logged user
@@ -86,7 +86,12 @@ typedef NS_ENUM(NSInteger, RoomVisibility) {
 /**
  *  The custom avatar last update date
  */
-@property (nonatomic, readonly) NSDate *lastAvatarUpdateDate;
+@property (atomic, readonly) NSDate *lastAvatarUpdateDate;
+
+/**
+ *  The custom data
+ */
+@property (nonatomic, readonly) NSDictionary *customData;
 
 /**
  *  Conference associated to the room. Can be nil if there is no conference associated

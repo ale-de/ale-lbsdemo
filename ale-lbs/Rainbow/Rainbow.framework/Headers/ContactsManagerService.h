@@ -26,12 +26,14 @@ FOUNDATION_EXPORT NSString *const kContactsManagerServiceDidEndPopulatingMyNetwo
 FOUNDATION_EXPORT NSString *const kContactsManagerServiceDidAddContact;
 FOUNDATION_EXPORT NSString *const kContactsManagerServiceDidUpdateContact;
 FOUNDATION_EXPORT NSString *const kContactsManagerServiceDidRemoveContact;
+FOUNDATION_EXPORT NSString *const kContactsManagerServiceDidRemoveAllContacts;
 FOUNDATION_EXPORT NSString *const kContactsManagerServiceDidInviteContact;
 FOUNDATION_EXPORT NSString *const kContactsManagerServiceDidFailedToInviteContact;
 FOUNDATION_EXPORT NSString *const kContactsManagerServiceDidUpdateMyContact;
 FOUNDATION_EXPORT NSString *const kContactsManagerServiceDidAcceptInvitation;
 FOUNDATION_EXPORT NSString *const kContactsManagerServiceDidChangeContactDisplayUserSettings;
 FOUNDATION_EXPORT NSString *const kContactsManagerServiceLocalAccessGrantedNotification;
+FOUNDATION_EXPORT NSString *const kContactsManagerServiceDidReceiveCreateConfUserActivated;
 
 FOUNDATION_EXPORT NSString *const kContactsManagerServiceClickToCallMobile;
 
@@ -53,6 +55,13 @@ typedef void (^ContactsManagerServiceSearchRemoteContactsCompletionHandler)(NSSt
  *  @param error    Error return in case of error while retrieving avatar
  */
 typedef void (^ContactsManagerServiceLoadHiResAvatarCompletionHandler)(NSData *receivedData, NSError *error);
+
+/**
+ *  Search completion handler invoked when a searching a remote contact return
+ *
+ *  @param foundContact contact found
+ */
+typedef void (^ContactsManagerServiceSearchRemoteContactCompletionHandler)(Contact *foundContact);
 
 @class ContactsManagerService;
 /**
@@ -95,7 +104,7 @@ typedef void (^ContactsManagerServiceLoadHiResAvatarCompletionHandler)(NSData *r
  *  Deal with contacts from server, deal with contact from the device
  *  Merge contacts to avoid presenting duplicates entries
  *
- *  ### Contacts Manager service available notifications ###
+ *  Contacts Manager service available notifications
  *   - kContactsManagerServiceDidAddContact: `notification sent when a contact is added, the created contact in notification object`
  *   - kContactsManagerServiceDidUpdateContact: `notification sent when a contact is update, a dict with contact and changed keys in notification object`
  *   - kContactsManagerServiceDidRemoveContact: `notification sent when a contact is removed, the removed contact in notification object`
@@ -109,7 +118,9 @@ typedef void (^ContactsManagerServiceLoadHiResAvatarCompletionHandler)(NSData *r
  */
 @interface ContactsManagerService : NSObject
 
-/** @name ContactsManager delegate */
+/**
+ *  @name ContactsManager delegate
+ */
 
 /**
 *  Delegate, see `ContactsManagerServiceDelegate` for details
@@ -117,7 +128,9 @@ typedef void (^ContactsManagerServiceLoadHiResAvatarCompletionHandler)(NSData *r
 */
 @property (nonatomic, assign) id<ContactsManagerServiceDelegate> delegate;
 
-/** @name ContactsManager properties */
+/**
+ *  @name ContactsManager properties
+ */
 
 /**
  *  List of contacts managed by Contacts Service Manager
@@ -165,7 +178,9 @@ typedef void (^ContactsManagerServiceLoadHiResAvatarCompletionHandler)(NSData *r
  */
 @property (nonatomic) NSInteger totalNbOfPendingInvitations;
 
-/** @name ContactsManager methods */
+/**
+ *  @name ContactsManager methods
+ */
 
 /**
  *  Ask to unlock the local AddressBook
@@ -278,6 +293,15 @@ typedef void (^ContactsManagerServiceLoadHiResAvatarCompletionHandler)(NSData *r
 -(NSArray<Contact *> *) searchAdressBookWithPattern:(NSString *) pattern;
 
 /**
+ *  Search contact on server side by jid
+ *  @discussion This method search asynchronously on the server for the given list of contacts jids.
+ *  Notifications `kContactsManagerServiceDidAddContact` or `kContactsManagerServiceDidUpdateContact` are triggered when the contact informations is created or updated
+ *
+ *  @param contactsJids list of jids to search on server side
+ */
+-(void) populateVcardForContactsJids:(NSArray <NSString *> *) contactsJids;
+
+/**
  *  Load a contact avatar.
  *
  *  @param contact The contact to update
@@ -302,7 +326,14 @@ typedef void (^ContactsManagerServiceLoadHiResAvatarCompletionHandler)(NSData *r
  */
 -(void) searchRemoteContactsWithPattern:(NSString *) pattern withCompletionHandler:(ContactsManagerServiceSearchRemoteContactsCompletionHandler) completionHandler;
 
-
+/**
+ *  Search for contact on remote server with given jid, and invoke completionHandler when finished.
+ *
+ *  @param contactJid        the searched contact jid
+ *  @param completionHandler the completion handler to invoked when the search is ended. Return `nil` in case of error, or if no result found
+ *  @see ContactsManagerServiceSearchRemoteContactCompletionHandler
+ */
+-(void) searchRemoteContactWithJid:(NSString *) contactJid withCompletionHandler:(ContactsManagerServiceSearchRemoteContactCompletionHandler) completionHandler;
 
 /**
  * Retrieve all contacts details from server
@@ -363,5 +394,19 @@ typedef void (^ContactsManagerServiceLoadHiResAvatarCompletionHandler)(NSData *r
  *  @see Contact
  */
 -(void) inviteByEmails:(nonnull NSArray<NSString *> *) emails withCompletionHandler:(void(^)(BOOL success))completionHandler;
+
+/**
+ *  Send an invitation by email
+ *
+ *  @see Contact
+ */
+-(void) inviteByEmail:(NSString *_Nonnull) email withCompletionHandler:(void(^)(Invitation * _Nullable invitation))completionHandler;
+
+/**
+ *  Send an invitation by phone number
+ *
+ *  @see Contact
+ */
+-(void) inviteByPhoneNumber:(NSString *_Nonnull) phoneNumber withCompletionHandler:(void(^)(Invitation * _Nullable invitation))completionHandler;
 
 @end

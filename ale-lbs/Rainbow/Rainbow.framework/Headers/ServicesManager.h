@@ -27,6 +27,7 @@
 #import "ConferencesManagerService.h"
 #import "CallLogsService.h"
 #import "ChannelsService.h"
+#import "TelephonyService.h"
 
 typedef void (^ServicesManagerDidConnectExtension)(void);
 /**
@@ -114,6 +115,12 @@ typedef void (^ServicesManagerDidConnectExtension)(void);
  * Channels service
  */
 @property (readonly) ChannelsService *channelsService;
+
+/**
+ * Telephony service
+ */
+@property (readonly) TelephonyService *telephonyService;
+
 
 /**
  * Set the application ID and secret key

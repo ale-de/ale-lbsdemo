@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger, ConferenceEndPointMediaType) {
 @property (nonatomic, readonly) BOOL isScheduled;
 @property (nonatomic, readonly) BOOL isDialOutDisabled;
 
-@property (nonatomic, readonly) BOOL isAttached;
+@property (nonatomic, readonly) NSString *attachedRoomID;
 @property (nonatomic, readonly) NSArray<PhoneNumber *> *phoneNumbers;
 @property (nonatomic, readonly) NSString *participantCode;
 @property (nonatomic, readonly) NSString *moderatorCode;

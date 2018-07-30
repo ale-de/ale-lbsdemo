@@ -16,12 +16,17 @@
 #import <Foundation/Foundation.h>
 #import "Group.h"
 
-/** @name Groups service Notifications */
-/** Groups service notification sent when a group is added 
+/**
+ * @name Groups service Notifications
+ */
+
+/**
+ *  Groups service notification sent when a group is added
  *  Group added is sent in notification object
  */
 FOUNDATION_EXPORT NSString *const kGroupsServiceDidAddGroup;
-/** Groups service notification sent when a group is updated (new contact added) 
+/**
+ *  Groups service notification sent when a group is updated (new contact added)
  *  Group updated is sent in notification object
  */
 FOUNDATION_EXPORT NSString *const kGroupsServiceDidUpdateGroup;
@@ -30,11 +35,14 @@ FOUNDATION_EXPORT NSString *const kGroupsServiceDidUpdateGroup;
  *  Notification object sent the concerned contact
  */
 FOUNDATION_EXPORT NSString *const kGroupsServiceDidUpdateGroupsForContact;
-/** Groups service notification sent when a group is remove 
+/**
+ *  Groups service notification sent when a group is remove
  *  Group removed is sent in notification object
  */
 FOUNDATION_EXPORT NSString *const kGroupsServiceDidRemoveGroup;
-/** Groups service notification sent when all groups are removed */
+/**
+ *  Groups service notification sent when all groups are removed
+ */
 FOUNDATION_EXPORT NSString *const kGroupsServiceDidRemoveAllGroups;
 
 

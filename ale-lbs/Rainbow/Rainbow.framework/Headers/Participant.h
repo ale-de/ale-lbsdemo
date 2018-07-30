@@ -29,6 +29,10 @@ typedef NS_ENUM(NSInteger, ParticipantStatus) {
      */
     ParticipantStatusInvited,
     /**
+     *  Participant is a invited guest from server guests list, he doesn't accept yet the email invitation
+     */
+    ParticipantStatusInvitedGuest,
+    /**
      *  Participant has rejected the invitation, he doesn't receive messages
      */
     ParticipantStatusRejected,
@@ -54,6 +58,10 @@ typedef NS_ENUM(NSInteger, ParticipantPrivilege) {
      */
     ParticipantPrivilegeUnknown = 0,
     /**
+     * Participant is the owner of the room
+     */
+    ParticipantPrivilegeOwner,
+    /**
      *  Participant is a standart user, he can sent messages
      */
     ParticipantPrivilegeUser,
@@ -62,7 +70,7 @@ typedef NS_ENUM(NSInteger, ParticipantPrivilege) {
      */
     ParticipantPrivilegeModerator,
     /**
-     *  Particiapant is a guest
+     *  Participant is a guest
      */
     ParticipantPrivilegeGuest
 };

@@ -175,6 +175,11 @@
 @property (nonatomic, readonly) BOOL isConnectedWithMobile;
 
 /**
+ *  Whether the user has a configured PBX access
+ */
+@property (nonatomic, readonly) BOOL hasPBXAccess;
+
+/**
  *  Time of the last user profile update
  */
 @property (nonatomic, readonly) NSDate *lastUpdateDate;
@@ -234,6 +239,11 @@
 
 // return YES if the contact came from an external server (for exemple Active directory)
 @property (nonatomic, readonly) BOOL isExternalContact;
+
+/**
+ *  Whether the user is PBX contact or not
+ */
+@property (nonatomic, readonly) BOOL isPBXContact;
 
 
 // -- Function helpers

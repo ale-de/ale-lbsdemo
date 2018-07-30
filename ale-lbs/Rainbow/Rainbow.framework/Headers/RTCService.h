@@ -17,11 +17,6 @@
 #import "RTCCall.h"
 #import <WebRTC/WebRTC.h>
 
-
-FOUNDATION_EXPORT NSString * _Nonnull const kRTCServiceDidAddCallNotification;
-FOUNDATION_EXPORT NSString * _Nonnull const kRTCServiceDidUpdateCallNotification;
-FOUNDATION_EXPORT NSString * _Nonnull const kRTCServiceDidRemoveCallNotification;
-
 // The notification emmited when we have new stats available
 FOUNDATION_EXPORT NSString * _Nonnull const kRTCServiceCallStatsNotification;
 
@@ -33,11 +28,13 @@ FOUNDATION_EXPORT NSString * _Nonnull const kRTCServiceDidRemoveLocalVideoTrackN
 FOUNDATION_EXPORT NSString * _Nonnull const kRTCServiceDidAddRemoteVideoTrackNotification;
 FOUNDATION_EXPORT NSString * _Nonnull const kRTCServiceDidRemoveRemoteVideoTrackNotification;
 
+FOUNDATION_EXPORT NSString * _Nonnull const kRTCServiceDidChangeRecordingCallStateNotification;
+
 /**
  *  Manage WebRTC calls (audio/video) made through Rainbow
  *  This allow to receive incoming RTC calls and also to start an outgoing call with somebody.
  *
- *  ### RTC service available notifications ###
+ *  RTC service available notifications
  *   - kRTCServiceCallStatsNotification: `notification sent when new statistics are available`
  */
 @interface RTCService : NSObject
@@ -143,7 +140,9 @@ FOUNDATION_EXPORT NSString * _Nonnull const kRTCServiceDidRemoveRemoteVideoTrack
  */
 -(void) unForceAudioOnSpeaker;
 
-/** @name ContactsManager methods */
+/**
+ * @name ContactsManager methods
+ */
 
 /**
  *  Ask to unlock the microphone
@@ -170,6 +169,8 @@ FOUNDATION_EXPORT NSString * _Nonnull const kRTCServiceDidRemoveRemoteVideoTrack
  */
 -(RTCMediaStream *_Nullable) remoteVideoStreamForCall:(RTCCall* _Nonnull) call;
 
+-(RTCMediaStream *_Nullable) remoteSharingStreamForCall:(RTCCall * _Nonnull) call;
+
 /**
  *  Get the local video stream for the given call if exist.
  *  @return RTCMediaStream object if this call have one.
@@ -179,4 +180,15 @@ FOUNDATION_EXPORT NSString * _Nonnull const kRTCServiceDidRemoveRemoteVideoTrack
 -(void) addVideoMediaToCall:(RTCCall *_Nonnull) call;
 
 -(void) removeVideoMediaFromCall:(RTCCall *_Nonnull) call;
+
+/**
+ *  Emit a new outgoing RTC call
+ *
+ *  @param number The number to call
+ *
+ *  @return Return the newly create RTCCall, or `nil` on error
+ *  @see RTCCall
+ */
+-(RTCCall *_Nullable) beginNewOutgoingCallWithWebRTCGatewayToNumber:(NSString *_Nonnull) number;
+
 @end

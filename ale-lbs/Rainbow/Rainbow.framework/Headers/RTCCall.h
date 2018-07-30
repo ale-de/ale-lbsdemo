@@ -14,7 +14,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "Peer.h"
+#import "Call.h"
 
 /**
  *  RTCCall type
@@ -31,59 +31,26 @@ typedef NS_ENUM(NSInteger, RTCCallFeatureFlags) {
     /**
      * Local video available
      */
-    RTCCallFeatureLocalVideo = 1 << 2
-};
-
-/**
- *  RTCCall status
- */
-typedef NS_ENUM(NSInteger, RTCCallStatus) {
+    RTCCallFeatureLocalVideo = 1 << 2,
     /**
-     *  Call is ringing
+     *  Remote sharing available
      */
-    RTCCallStatusRinging = 0,
+    RTCCallFeatureRemoteSharing = 1 << 3,
     /**
-     *  Call is accepted, we can proceed and establish
+     *  Media pillar feature
      */
-    RTCCallStatusConnecting,
-    /**
-     *  Call is declined.
-     */
-    RTCCallStatusDeclined,
-    /**
-     *  Call has not been accepted/decline in time.
-     */
-    RTCCallStatusTimeout,
-    /**
-     *  Call has been canceled
-     */
-    RTCCallStatusCanceled,
-    /**
-     *  Call has been established
-     */
-    RTCCallStatusEstablished,
-    /**
-     *  Call has been hangup
-     */
-    RTCCallStatusHangup,
+    RTCCallFeatureMediaPillar = 1 << 4
 };
 
 
-@interface RTCCall : NSObject
-
-@property(nonatomic, readonly) NSUUID *callID;
+@interface RTCCall : Call
+@property (nonatomic, readonly) NSUUID *callID;
 
 @property(nonatomic, readonly) NSString *jingleSessionID;
 
-@property(nonatomic, readonly) Peer *peer;
-
-@property(nonatomic, readonly) BOOL isIncoming;
-
-@property(nonatomic, readonly) RTCCallStatus status;
-
 @property(nonatomic, readonly) RTCCallFeatureFlags features;
 
-@property (nonatomic, readonly) NSDate *connectionDate;
+@property (nonatomic, readonly) BOOL isRecording;
 
 -(BOOL) isAudioEnabled;
 
@@ -93,5 +60,5 @@ typedef NS_ENUM(NSInteger, RTCCallStatus) {
 
 -(BOOL) isRemoteVideoEnabled;
 
-@property (nonatomic, readonly) BOOL isSharingEnabled;
+-(BOOL) isSharingEnabled;
 @end

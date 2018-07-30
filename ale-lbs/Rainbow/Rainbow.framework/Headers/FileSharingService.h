@@ -17,11 +17,18 @@
 #import "File.h"
 #import "Conversation.h"
 
+FOUNDATION_EXPORT NSString *const kFileSharingServiceDidUpdateUploadedBytesSent;
+FOUNDATION_EXPORT NSString *const kFileSharingServiceDidUpdateDownloadedBytes;
+FOUNDATION_EXPORT NSString *const kFileSharingServiceDidUpdateFile;
+FOUNDATION_EXPORT NSString *const kFileSharingServiceDidRemoveFile;
+
 typedef void (^FileSharingDataDownloadedComplionHandler) (File *file, NSError *error);
 typedef void (^FileSharingDataUploadedComplionHandler) (File *file, NSError *error);
+typedef void (^FileSharingMaxDataSizeComplionHandler) (NSUInteger maxChunkSizeDownload,NSUInteger maxChunkSizeUpload, NSError *error);
 typedef void (^FileSharingDataRemoveViewerComplionHandler) (File *file, NSError *error);
 typedef void (^FileSharingDataLoadSharedFilesWithPeerComplionHandler) (NSArray<File *> *files, NSError *error);
-typedef void (^FileSharingRefreshSharedFileListComplionHandler) (NSArray<File *> *files, NSError *error);
+typedef void (^FileSharingRefreshSharedFileListComplionHandler) (NSArray<File *> *files , NSUInteger offset , NSUInteger total, NSError *error);
+typedef void (^FileSharingFilterComplionHandler) (NSArray<File *> *files , NSError *error);
 
 @interface FileSharingService : NSObject
 // File sharing current consumption size (in octet)
@@ -32,16 +39,23 @@ typedef void (^FileSharingRefreshSharedFileListComplionHandler) (NSArray<File *>
 
 @property (readonly) NSArray<File *> *files;
 
--(File *) createTemporaryFileWithFileName:(NSString *) fileName andData:(NSData *) data;
+-(File *) createTemporaryFileWithFileName:(NSString *) fileName andData:(NSData *) data andURL:(NSURL *)url;
 
 -(void) downloadDataForFile:(File *) file withCompletionHandler:(FileSharingDataDownloadedComplionHandler) completionHandler;
 
+-(void) downloadThumbnailDataForFile:(File *) file withCompletionHandler:(FileSharingDataDownloadedComplionHandler) completionHandler;
+
 -(void) deleteFile:(File *) file;
 
--(void) loadSharedFilesWithPeer:(Peer *) peer completionHandler:(FileSharingDataLoadSharedFilesWithPeerComplionHandler)completionHandler;
+-(void) loadSharedFilesWithPeer:(Peer *) peer fromOffset :(NSUInteger)offset completionHandler:(FileSharingDataLoadSharedFilesWithPeerComplionHandler)completionHandler;
 
 -(void) removeViewer:(Peer *) peer fromFile:(File *) file completionHandler:(FileSharingDataRemoveViewerComplionHandler) completionHandler;
 
--(void) refreshSharedFileListWithCompletionHandler:(FileSharingRefreshSharedFileListComplionHandler) completionHandler;
+-(void) refreshSharedFileListFromOffset :(NSInteger)offset withLimit:(NSInteger)limit withTypeMIME:(FilterFileType)typeMIME withCompletionHandler:(FileSharingRefreshSharedFileListComplionHandler) completionHandler;
+
+-(void) fetchFileInformation:(File *) file;
+
+-(File *) getFileByRainbowID:(NSString *) rainbowID;
+
 
 @end

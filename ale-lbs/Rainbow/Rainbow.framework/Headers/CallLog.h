@@ -35,12 +35,19 @@ typedef NS_ENUM(NSInteger, CallLogType){
     CallLogTypeUnknown
 };
 
+typedef NS_ENUM(NSInteger, CallLogService){
+    CallLogServiceConference,
+    CallLogServiceUnknown
+};
+
 @interface CallLog : NSObject
 
 // Peer of the callLog
 @property (nonatomic, readonly) Peer *peer;
 // Type of callLog
 @property (nonatomic, readonly) CallLogType type;
+// Service of callLog
+@property (nonatomic, readonly) CallLogService service;
 // State if the callLog
 @property (nonatomic, readonly) CallLogState state;
 // Date of the callLog
@@ -51,6 +58,5 @@ typedef NS_ENUM(NSInteger, CallLogType){
 @property (nonatomic, readonly) CallLogMedia media;
 // flag for outgoing callLog
 @property (nonatomic, readonly) BOOL isOutgoing;
-
 
 @end

@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ale-lbs/SecondViewController.swift"
-            timestampString = "543172167.810946"
+            timestampString = "545911263.368796"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "25"
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ale-lbs/FirstViewController.swift"
-            timestampString = "543251122.935897"
+            timestampString = "554637855.963974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "didLogin(notification:)"
             landmarkType = "7">
          </BreakpointContent>

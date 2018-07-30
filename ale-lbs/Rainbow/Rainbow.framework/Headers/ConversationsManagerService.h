@@ -21,6 +21,8 @@
 #import "MessagesBrowser.h"
 #import "File.h"
 
+FOUNDATION_EXPORT NSString *const kConversationsManagerDidEndLoadingConversations;
+
 FOUNDATION_EXPORT NSString *const kConversationsManagerDidAddConversation;
 FOUNDATION_EXPORT NSString *const kConversationsManagerDidRemoveConversation;
 FOUNDATION_EXPORT NSString *const kConversationsManagerDidRemoveAllConversations;
@@ -35,6 +37,8 @@ FOUNDATION_EXPORT NSString *const kConversationsManagerDidAckMessageNotification
 FOUNDATION_EXPORT NSString *const kConversationsManagerDidUpdateMessagesUnreadCount;
 
 FOUNDATION_EXPORT NSString *const kConversationsManagerDidReceiveConferenceReminderInConversation;
+
+
 
 /**
  *  Send message completion handler
@@ -54,7 +58,9 @@ typedef void (^ConversationsManagerConversationStartedComplionHandler) (Conversa
  *  Rainbow conversation service
  */
 @interface ConversationsManagerService : NSObject
-/** @name ConversationsManager properties */
+/**
+ *  @name ConversationsManager properties
+ */
 
 /** List of all conversations */
 @property (nonatomic, readonly) NSArray<Conversation *> *conversations;
@@ -62,7 +68,9 @@ typedef void (^ConversationsManagerConversationStartedComplionHandler) (Conversa
 /** Total number of unread messages for all conversations */
 @property (nonatomic, readonly) NSInteger totalNbOfUnreadMessagesInAllConversations;
 
-/** @name ConversationsManager methods */
+/**
+ *  @name ConversationsManager methods
+ */
 
 /**
  *  Start a new conversation with the given peer
@@ -70,6 +78,15 @@ typedef void (^ConversationsManagerConversationStartedComplionHandler) (Conversa
  *  @param peer peer with whom you want to start a conversation
  */
 -(void) startConversationWithPeer:(Peer *) peer withCompletionHandler:(ConversationsManagerConversationStartedComplionHandler) completionHandler;
+
+-(void) startConversationWithPeer:(Peer *) peer notifyStartConversation:(BOOL) notify withCompletionHandler:(ConversationsManagerConversationStartedComplionHandler) completionHandler;
+
+/**
+ *  simulateReceiveMessage when receive new notification
+ *
+ *  @param message           message received from notifications
+ */
+-(void)simulateDidReceiveMessage:(Message *)message;
 
 /**
  *  Stop an existing conversation
@@ -91,6 +108,18 @@ typedef void (^ConversationsManagerConversationStartedComplionHandler) (Conversa
  */
 
 -(Message *) sendMessage:(NSString *) message fileAttachment:(File *) file to:(Conversation *) conversation completionHandler:(ConversationsManagerServiceSendMessageCompletionHandler) completionHandler attachmentUploadProgressHandler:(ConversationsManagerAttachmentProgressionHandler) progressHandler;
+
+/**
+ *  re-send message with a attached image action
+ *
+ *  @param message           message to re send
+ *  @param conversation      conversation object in which you want to send the message
+ *  @param completionHandler method to invoke when send action is completed
+ *  @param progressHandler   method invoked during upload of attachment data to the server (this method is invoked multiple times)
+ *  @return message          return the message.
+ */
+
+-(Message *) reSendMessage:(Message *) message to:(Conversation *) conversation completionHandler:(ConversationsManagerServiceSendMessageCompletionHandler) completionHandler attachmentUploadProgressHandler:(ConversationsManagerAttachmentProgressionHandler) progressHandler;
 
 /**
  *  Find a conversation with some one or with a room based on his unique identifier
@@ -188,4 +217,7 @@ typedef void (^ConversationsManagerConversationStartedComplionHandler) (Conversa
 -(void) downloadAttachmentForMessage:(Message *) message completionHandler:(ConversationsManagerAttachmentDownloadedComplionHandler) completionHandler;
 
 -(void) handleContinueUserActivity:(NSUserActivity *)userActivity error:(NSError **)errorPointer waitingForResponse:(void (^_Nullable)(BOOL receivedResponse))waitingForResponseBlock restorationHandler:(void (^_Nullable)(NSArray * _Nullable))restorationHandler;
+
+-(void) deleteFailedMessage:(Message *) message to:(Conversation *) conversation;
+
 @end

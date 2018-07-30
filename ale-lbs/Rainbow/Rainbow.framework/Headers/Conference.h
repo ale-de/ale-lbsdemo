@@ -16,6 +16,7 @@
 #import <Foundation/Foundation.h>
 #import "ConfEndpoint.h"
 #import "ConferenceParticipant.h"
+#import "ConferencePublisher.h"
 
 /**
  *  The different conference type
@@ -37,9 +38,10 @@ typedef NS_ENUM(NSInteger, ConferenceType) {
 @property (nonatomic, readonly) NSString *confId;
 @property (nonatomic, readonly) Contact *owner;
 @property (nonatomic, readonly) BOOL isMyConference;
-@property (nonatomic, readonly) NSDate *start;
-@property (nonatomic, readonly) NSDate *end;
+@property (atomic, readonly) NSDate *start;
+@property (atomic, readonly) NSDate *end;
 @property (nonatomic, readonly) NSArray<ConferenceParticipant*> *participants;
+@property (nonatomic, readonly) NSArray<ConferencePublisher*> *publishers;
 @property (nonatomic, readonly) ConfEndpoint *endpoint;
 // Facilitor to get my own participant object
 @property (nonatomic, readonly) ConferenceParticipant *myConferenceParticipant;

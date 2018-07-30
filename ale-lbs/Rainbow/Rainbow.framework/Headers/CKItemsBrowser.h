@@ -26,6 +26,8 @@
  @param error The error that may have occured while browsing. `nil` if no error during the browsing operation. */
 typedef void(^CKItemsBrowsingCompletionHandler)(NSArray* addedCacheItems, NSArray* removedCacheItems, NSArray* updatedCacheItems, NSError* error);
 
+typedef void(^CKItemsBrowsingSuccessCompletionHandler)(BOOL sucess);
+
 @class CKItemsBrowser;
 
 /**
@@ -126,7 +128,9 @@ typedef void(^CKItemsBrowsingCompletionHandler)(NSArray* addedCacheItems, NSArra
     @protected
     id<CKItemsBrowserDelegate> _delegate;
 }
-/** @name Properties */
+/**
+ * @name Properties
+ */
 
 /** This browser's delegate. Use it to be informed of events impacting the current browsing window: added / removed / updated items. */
 @property (readwrite, assign) id <CKItemsBrowserDelegate> delegate;
@@ -138,7 +142,9 @@ typedef void(^CKItemsBrowsingCompletionHandler)(NSArray* addedCacheItems, NSArra
 -(instancetype) initWithItemsCountPerPage:(NSInteger)itemsPerPage; 
 
 #pragma mark - Cache maintenance
-/** @name Cache maintenance */
+/**
+ * @name Cache maintenance
+ */
 /** Resets this browser instance: cache is cleaned, browsing window is reset. The state 
  of the browser after this is the same as it would be as after creation. */ 
 -(void) reset;
@@ -161,7 +167,9 @@ typedef void(^CKItemsBrowsingCompletionHandler)(NSArray* addedCacheItems, NSArra
 -(id<CKBrowsableItem>) getCacheItemWithReferenceIdentifier:(NSString*)refIdentifier;
 
 #pragma mark - Pages retrieval 
-/** @name Pages retrieval */
+/**
+ * @name Pages retrieval
+ */
 
 /** Returns `YES` if this browser may have more items to browse. 
  @return Returns `YES` if this browser may have more items to browse. `NO` if the end of items have been reached. */
@@ -174,7 +182,9 @@ typedef void(^CKItemsBrowsingCompletionHandler)(NSArray* addedCacheItems, NSArra
 -(void) nextPageWithCompletionHandler:(CKItemsBrowsingCompletionHandler)completionHandler;
 
 #pragma mark - Resyncing cache 
-/** @name Resyncing cache */
+/**
+ * @name Resyncing cache
+ */
 
 /** Resyncs current browsing cache asynchronously until the given date.
  This retrieves once again all pages to get all items until the given date and updates the cache according

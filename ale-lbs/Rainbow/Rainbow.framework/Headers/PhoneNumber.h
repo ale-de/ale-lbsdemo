@@ -87,9 +87,19 @@ typedef NS_ENUM(NSInteger, PhoneNumberDeviceType) {
 
 /** Phone number country code */
 @property (nonatomic, readonly) NSString *countryCode;
+/** Phone country name
+ *  @discussion will contain the country name of the phone number, it used for phone number of type `PhoneNumberTypeConference` to help the application to display it correctly
+ */
+@property (nonatomic, readonly) NSString *countryName;
 
 /** This phone number is monitored by a PBX */
 @property (nonatomic, readonly) BOOL isMonitored;
+
+/** Boolean value indicating that the phone number must include language selection in dtmf code
+ *  @discussion This boolean is used for phone number of type `PhoneNumberTypeConference` to help the application to determine if the dtmf code must contain suplementary informations
+ */
+
+@property (nonatomic, readonly) BOOL needLanguageSelection;
 
 /**
  *  Phone number json respresentation
@@ -104,4 +114,11 @@ typedef NS_ENUM(NSInteger, PhoneNumberDeviceType) {
  *  @return Dictionary representation of a phone number object
  */
 -(NSDictionary *) dictionaryRepresentation;
+
+/**
+ * Create a phonenumber from the given string
+ * @param phoneNumberString     a string representing the phone number
+ * @discussion  there is no validation of phone number string given
+ */
+-(instancetype) initWithPhoneNumberString:(NSString *) phoneNumberString;
 @end

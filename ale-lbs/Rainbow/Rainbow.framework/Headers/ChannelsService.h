@@ -18,22 +18,42 @@
 #import "ChannelPayload.h"
 #import "ChannelUser.h"
 
+/**
+ * Constant for received channel's new item notifications
+ */
 FOUNDATION_EXPORT NSString *const kChannelsServiceDidReceiveItem;
+
+/**
+ * Constant for retracted channel's item notifications
+ */
 FOUNDATION_EXPORT NSString *const kChannelsServiceDidRetractItem;
 
+/**
+ * Constant for channel deletion notifications
+ */
+FOUNDATION_EXPORT NSString *const kChannelsServiceDidDeleteChannel;
+
+/**
+ * Channel description
+ */
 @interface ChannelDescription : NSObject
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) NSString *topic;
 @property (nonatomic, readonly) NSString *id;
 @property (nonatomic, readonly) ChannelUserType userType;
+@property (nonatomic, readonly) NSString *creatorId;
 @end
 
 #define MAX_ITEMS_IN_CHANNEL 100
 
+/**
+ * Manager channels
+ */
 @interface ChannelsService : NSObject
 
 typedef void (^ChannelsServiceCompletionHandler) (NSError *error);
 typedef void (^ChannelsServiceGetMyChannelsCompletionHandler) (NSArray<ChannelDescription *> *channelDescriptions, NSError *error);
+typedef void (^ChannelsServiceFindChannelsCompletionHandler) (NSArray<ChannelDescription *> *channelDescriptions, NSError *error);
 typedef void (^ChannelsServiceGetChannelCompletionHandler) (Channel *channel, NSError *error);
 typedef void (^ChannelsServiceGetItemsCompletionHandler) (NSInteger availableItemsCount, NSArray<ChannelPayload *> *items, NSError *error);
 typedef void (^ChannelsServiceGetUsersCompletionHandler) (NSArray<ChannelUser *> *users, NSError *error);
@@ -120,5 +140,53 @@ typedef void (^ChannelsServiceGetUsersCompletionHandler) (NSArray<ChannelUser *>
  *  @param  completionHandler   completion handler
  */
 -(void)getNextUsersFromChannel:(Channel *)channel atIndex:(NSInteger)index completionHandler:(ChannelsServiceGetUsersCompletionHandler) completionHandler;
+
+/**
+ *  Find channels whose name match a given substring
+ *  @param  name                the part of channels name to search
+ *  @param  limit               allow to specify a limit to the number of channels to retrieve, pass -1 for the default (100)
+ *  @param  completionHandler   completion handler
+ */
+-(void)findChannelByName:(NSString *)name limit:(NSInteger)limit completionHandler:(ChannelsServiceFindChannelsCompletionHandler) completionHandler;
+
+/**
+ *  Find channels whose topic match a given substring
+ *  @param  topic               the part of channels topic to search
+ *  @param  limit               allow to specify a limit to the number of channels to retrieve, pass -1 for the default (100)
+ *  @param  completionHandler   completion handler
+ */
+-(void)findChannelByTopic:(NSString *)topic limit:(NSInteger)limit completionHandler:(ChannelsServiceFindChannelsCompletionHandler) completionHandler;
+
+/**
+ *  Update channel's topic
+ *  @param  id                  the channel Id
+ *  @param  topic               the new topic
+ *  @param  completionHandler   completion handler
+ */
+-(void)updateChannelWithId:(NSString *)id topic:(NSString *)topic completionHandler:(ChannelsServiceCompletionHandler) completionHandler;
+
+/**
+ *  Update channel's visibility
+ *  @param  id                  the channel Id
+ *  @param  visibility          the new visibility
+ *  @param  completionHandler   completion handler
+ */
+-(void)updateChannelWithId:(NSString *)id visibility:(ChannelVisibility)visibility completionHandler:(ChannelsServiceCompletionHandler) completionHandler;
+
+/**
+ *  Update channel's max items
+ *  @param  id                  the channel Id
+ *  @param  maxItems            the new max of items
+ *  @param  completionHandler   completion handler
+ */
+-(void)updateChannelWithId:(NSString *)id maxItems:(NSUInteger)maxItems completionHandler:(ChannelsServiceCompletionHandler) completionHandler;
+
+/**
+ *  Update channel's max payload size
+ *  @param  id                  the channel Id
+ *  @param  maxPayloadSize      the new max payload size
+ *  @param  completionHandler   completion handler
+ */
+-(void)updateChannelWithId:(NSString *)id maxPayloadSize:(NSUInteger)maxPayloadSize completionHandler:(ChannelsServiceCompletionHandler) completionHandler;
 
 @end

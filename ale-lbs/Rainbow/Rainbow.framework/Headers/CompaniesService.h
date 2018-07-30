@@ -56,4 +56,7 @@ typedef void (^CompaniesServiceRequestJoinCompanyCompletionHandler) (Company* co
 
 -(void) acceptCompanyInvitation:(CompanyInvitation *) companyInvitation;
 -(void) declineCompanyInvitation:(CompanyInvitation *) companyInvitation;
+
+-(void) populateLogoForCompany:(Company *) company;
+-(void) populateBannerForCompany:(Company *) company;
 @end

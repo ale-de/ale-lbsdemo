@@ -25,7 +25,7 @@ FOUNDATION_EXPORT NSString *const kNotificationsManagerHandleNotification;
  *  Register for user notifications
  *  @discussion ask to the platform to display notification with following types UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound and also some categories to allow user to interact directly with the notification
  */
--(void) registerForUserNotificationsSettings;
+-(void) registerForUserNotificationsSettingsWithCompletionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler;
 
 /**
  *  Did register for remote notifications with device token
@@ -50,5 +50,12 @@ FOUNDATION_EXPORT NSString *const kNotificationsManagerHandleNotification;
  *  @param userInfo user informations contained in the notification
  */
 -(void) didReceiveNotificationWithUserInfo:(NSDictionary *) userInfo;
+
+/**
+ *  Did receive notification
+ *  @discussion You must invoke this method when the platform inform you that the user has received notification.
+ *  @param userInfo user informations contained in the notification
+ */
+-(void) saveNotificationWithUserInfo:(NSDictionary *) userInfo;
 
 @end

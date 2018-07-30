@@ -15,6 +15,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define OTCLog(format, ...) NSLog(@"[%@:%d] %@", NSStringFromClass([self class]), __LINE__, [NSString stringWithFormat:(format), ##__VA_ARGS__])
+
+
 @interface Tools : NSObject
 NSString* NSStringFromBOOL(BOOL aBoolean);
 
@@ -30,6 +33,8 @@ NSString* NSStringFromBOOL(BOOL aBoolean);
 + (NSDate *) dateWithLastModifiedHeaderString:(NSString *) dateString;
 + (NSDate *) dateFromString:(NSString *) dateString withFormat: (NSString *) formatString;
 + (NSString *) anonymizeString:(NSString *) string;
-+(NSString *)valueForKey:(NSString *)key fromURL:(NSURL *)url;
-+(NSString *) resourceName;
++ (NSString *)valueForKey:(NSString *)key fromURL:(NSURL *)url;
++ (NSURLQueryItem *)containsQueryItem:(NSString *)key fromURL:(NSURL *)url;
++ (NSString *) resourceName;
++ (NSString *) rainbowAppGroupPath;
 @end

@@ -27,4 +27,6 @@
 
 /** jid to use for rtc calls (jid of the user for peer of contact kind, conference jid for room object kind) */
 @property (nonatomic, readonly) NSString *rtcJid;
+
+@property (nonatomic, readonly) NSString *calledNumber;
 @end

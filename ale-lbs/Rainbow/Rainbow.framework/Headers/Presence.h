@@ -79,7 +79,7 @@ typedef NS_ENUM(NSInteger, ContactPresence) {
  *
  *  @return Presence Do not distrub object
  */
-+(Presence *) presenceDoNotDistrub;
++(Presence *) presenceDoNotDisturb;
 
 /**
  *  Helper to create easly a presence away object

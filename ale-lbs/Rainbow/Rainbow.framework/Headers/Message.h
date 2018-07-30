@@ -19,6 +19,7 @@
 #import "Contact.h"
 #import "File.h"
 #import "CallLog.h"
+#import "NomadicStatus.h"
 
 #define kMessageCallLogEventTypeKey @"eventType"
 #define kMessageCallLogEventDateKey @"eventDate"
@@ -63,7 +64,12 @@ typedef NS_ENUM(NSInteger, MessageType) {
     /**
      *  Type channel
      */
-    MessageTypeChannel
+    MessageTypeChannel,
+    
+    MessageTypeCallRecordingStart,
+    MessageTypeCallRecordingStop,
+    
+    MessageTypeCallServiceNomadicStatus
 };
 
 /**
@@ -170,7 +176,7 @@ typedef NS_ENUM(NSInteger, MessageGroupChatEventType) {
 @property (nonatomic, readonly) NSString *body;
 /** Message timestamp */
 @property (nonatomic, readonly) NSDate *timestamp;
-/** Message date */
+/** Message date, it is a alias for the timestamp property */
 @property (nonatomic, readonly) NSDate *date;
 /** Boolean value set to `YES` if the message is outgoing */
 @property (nonatomic, readonly) BOOL isOutgoing;
@@ -200,6 +206,8 @@ typedef NS_ENUM(NSInteger, MessageGroupChatEventType) {
  */
 @property (nonatomic, readonly) BOOL hasBeenPresentedInPush;
 
+@property (nonatomic, readonly) BOOL isResentMessage;
+
 /**
  * if the message type is MessageTypeWebRTC this object describe the event
  */
@@ -210,6 +218,12 @@ typedef NS_ENUM(NSInteger, MessageGroupChatEventType) {
  * `nil` if this message have no attachment
  */
 @property (nonatomic, readonly) File *attachment;
+
+/**
+ * Nomadic status found in the message
+ * `nil` if this message have no status
+ */
+@property (nonatomic, readonly) NomadicStatus *nomadicStatus;
 
 /**
  *  Returns the delivery date for a given state, or nil.

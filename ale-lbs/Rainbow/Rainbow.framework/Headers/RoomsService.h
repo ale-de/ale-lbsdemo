@@ -26,26 +26,34 @@ FOUNDATION_EXPORT NSString *const kRoomsServiceDidRemoveRoom;
 FOUNDATION_EXPORT NSString *const kRoomsServiceDidRemoveAllRooms;
 FOUNDATION_EXPORT NSString *const kRoomsServiceDidReceiveRoomInvitation;
 FOUNDATION_EXPORT NSString *const kRoomsServiceDidRoomInvitationStatusChanged;
+FOUNDATION_EXPORT NSString *const kRoomsServiceDidFailRemoveRoom;
 
-typedef void (^RoomsServiceAttachConferenceCompletionHandler) (NSError *error);
+typedef void (^RoomsServiceAttachConferenceCompletionHandler) (NSError *error, Conference *conference);
 typedef void (^RoomsServiceDetachConferenceCompletionHandler) (NSError *error);
-typedef void (^RoomsServiceDetailCompletionHandler) (NSDictionary *data, NSError *error);
+typedef void (^RoomsServiceManageCustomDataCompletionHandler) (NSError *error);
+typedef void (^RoomsServiceCompletionHandler) (Room *room, NSError *error);
 typedef void (^RoomsServiceConferenceInvitationsCompletionHandler) (NSDictionary *response, NSError *error);
 typedef void (^RoomsServiceConferenceCompletionHandler) (NSDictionary *conferenceData, NSError *error);
 typedef void (^RoomsServiceConferencesCompletionHandler) (NSArray *conferencesData, NSError *error);
+typedef void (^RoomsServiceUsersCompletionHandler) (NSArray<Participant *> *participants, NSError *error);
 
 /**
  *  Manage multi user chat rooms
  */
 @interface RoomsService : NSObject
-/** @name RoomsService properties */
+/**
+ *  @name RoomsService properties
+ */
 
 /**
  *  All rooms managed by Rooms Service
  */
 @property (nonatomic, readonly) NSArray<Room *> *rooms;
 
-/** @name RoomsService public methods */
+/**
+ *  @name RoomsService public methods
+ */
+
 /**
  *  Find a room based on it's unique identifer
  *
@@ -69,6 +77,20 @@ typedef void (^RoomsServiceConferencesCompletionHandler) (NSArray *conferencesDa
 -(Room *) createRoom:(NSString *) name withTopic:(NSString *) topic;
 
 /**
+ *  Create a new Room
+ *  This will send a request to the server to create the room.
+ *
+ *  Synchronous method ! Must not be invoked on MainThread
+ *
+ *  @param name  The room name
+ *  @param topic The room topic (Optional)
+ *  @param error The error if we got one during the creation
+ *
+ *  @return The newly created room object, can be `nil` in case of error
+ */
+-(Room *) createRoom:(NSString *) name withTopic:(NSString *) topic error:(NSError **) error;
+
+/**
  *  Invite a contact to join the given room
  *  Only creator can invite people to join a room
  *
@@ -77,7 +99,7 @@ typedef void (^RoomsServiceConferencesCompletionHandler) (NSArray *conferencesDa
  *  @param contact the contact to invite to join
  *  @param room    the room to join
  */
--(void) inviteContact:(Contact *) contact inRoom:(Room *) room;
+-(void) inviteContact:(Contact *) contact inRoom:(Room *) room error:(NSError **) error;
 
 /**
  *  Cancel an invitation sent to a contact
@@ -94,7 +116,7 @@ typedef void (^RoomsServiceConferencesCompletionHandler) (NSArray *conferencesDa
  *
  *  @param room The room to join.
  */
--(void) acceptInvitation:(Room *) room;
+-(void) acceptInvitation:(Room *) room completionBlock:(void (^)(NSError *error,BOOL success)) completionHandler;
 
 /**
  *  Decline the invitation in the given room and ignore it.
@@ -102,7 +124,7 @@ typedef void (^RoomsServiceConferencesCompletionHandler) (NSArray *conferencesDa
  *
  *  @param room The room to ignore.
  */
--(void) declineInvitation:(Room *) room;
+-(void) declineInvitation:(Room *) room completionBlock:(void (^)(NSError *error,BOOL success)) completionHandler;
 
 /**
  *  This gives the number of not hosting conference room invitation still pending.
@@ -135,6 +157,17 @@ typedef void (^RoomsServiceConferencesCompletionHandler) (NSArray *conferencesDa
 -(void) updateRoom:(Room *) room withName:(NSString *) name;
 
 /**
+ *  Update a room participant's privilege.
+ *  This is a asynchronous request, a kRoomsServiceDidUpdateRoom notification is triggered at completion
+ *
+ *  @param participant      the participant to update
+ *  @param privilege        new privilege
+ *  @param room             the room in which the participant belongs
+ *  @param completionBlock  a code block called at completion of the asynchronous request, could be nil.
+ */
+-(void) updateParticipant:(Participant *)participant withPrivilege:(ParticipantPrivilege)privilege inRoom:(Room *)room withCompletionBlock:(void (^)(NSError *error))completionBlock;
+
+/**
  *  Upload a room avatar
  *
  *  @param room  the room that must be updated
@@ -160,6 +193,15 @@ typedef void (^RoomsServiceConferencesCompletionHandler) (NSArray *conferencesDa
  *  @param room         the room where the participant is
  */
 -(void) deleteParticipant:(Participant *) participant fromRoom:(Room *) room;
+
+/**
+ *  Get participants in the given room, this is a paginated call allowing to retrieve
+ *  a range of the participants
+ *
+ *  @param inRange      the range to retrieve
+ *  @param room         the room where the participants are
+ */
+-(void) getParticipantRange:(NSRange)inRange inRoom:(Room *)room completionBlock:(RoomsServiceUsersCompletionHandler) completionHandler;
 
 /**
  *  Archive a room
@@ -235,4 +277,15 @@ typedef void (^RoomsServiceConferencesCompletionHandler) (NSArray *conferencesDa
  *  @return list of room that match the given pattern
  */
 -(NSArray<Room *> *) searchMyRoomMatchName:(NSString *) str;
+
+/**
+ *  Update room with custom data
+ *  @param room The room we want to manage associated custom data
+ *  @param datas A key/value list of data
+ */
+-(void) updateRoom:(Room *) room withCustomData:(NSDictionary*)datas completionBlock:(RoomsServiceManageCustomDataCompletionHandler) completionHandler;
+
+
+-(Room*) getOrCreateRainbowRoomSynchronouslyWithJid:(NSString *) room_jid;
+
 @end
