@@ -32,6 +32,14 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Bot name</string>
+			<key>Key</key>
+			<string>RAINBOW-BOTEMAIL</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
 			<string>Stellar LBS</string>

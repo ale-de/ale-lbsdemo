@@ -38,7 +38,8 @@ FOUNDATION_EXPORT NSString *const kConversationsManagerDidUpdateMessagesUnreadCo
 
 FOUNDATION_EXPORT NSString *const kConversationsManagerDidReceiveConferenceReminderInConversation;
 
-
+FOUNDATION_EXPORT NSString *const kIsAbleToRefreshUIChanged;
+FOUNDATION_EXPORT NSString *const kEndReceiveXMPPRequestsAfterResume;
 
 /**
  *  Send message completion handler

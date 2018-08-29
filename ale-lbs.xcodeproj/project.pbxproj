@@ -13,15 +13,11 @@
 		1CA507E6205FE22300C7F896 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CA507E4205FE22300C7F896 /* Main.storyboard */; };
 		1CA507E8205FE22300C7F896 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA507E7205FE22300C7F896 /* Assets.xcassets */; };
 		1CA507EB205FE22300C7F896 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CA507E9205FE22300C7F896 /* LaunchScreen.storyboard */; };
-		1CA507F4205FE50B00C7F896 /* Rainbow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA507F3205FE50B00C7F896 /* Rainbow.framework */; };
-		1CA507F6205FE51900C7F896 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA507F5205FE51900C7F896 /* WebRTC.framework */; };
-		1CA507F7205FEA5900C7F896 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA507F5205FE51900C7F896 /* WebRTC.framework */; };
-		1CA507F8205FEA5900C7F896 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA507F5205FE51900C7F896 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1CA507FA205FEA5E00C7F896 /* Rainbow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA507F3205FE50B00C7F896 /* Rainbow.framework */; };
-		1CA507FB205FEA5E00C7F896 /* Rainbow.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA507F3205FE50B00C7F896 /* Rainbow.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1CA507FD205FEF8A00C7F896 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1CA507FC205FEF8A00C7F896 /* Settings.bundle */; };
 		1CA50801205FF10F00C7F896 /* Nao.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA507FF205FF10F00C7F896 /* Nao.m */; };
 		1CA50803205FF67B00C7F896 /* SettingsBundleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA50802205FF67B00C7F896 /* SettingsBundleHelper.swift */; };
+		1CD757CD2126F8510000BC50 /* Rainbow.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD757C82126F68D0000BC50 /* Rainbow.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1CD757CF2126F8510000BC50 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD757C92126F68E0000BC50 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8E6918D563C69EE09C3CE6F3 /* Pods_ale_lbs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5569FF54873C5EA34A02E78C /* Pods_ale_lbs.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,8 +28,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1CA507F8205FEA5900C7F896 /* WebRTC.framework in Embed Frameworks */,
-				1CA507FB205FEA5E00C7F896 /* Rainbow.framework in Embed Frameworks */,
+				1CD757CD2126F8510000BC50 /* Rainbow.framework in Embed Frameworks */,
+				1CD757CF2126F8510000BC50 /* WebRTC.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -49,13 +45,13 @@
 		1CA507E7205FE22300C7F896 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1CA507EA205FE22300C7F896 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1CA507EC205FE22300C7F896 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1CA507F3205FE50B00C7F896 /* Rainbow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Rainbow.framework; sourceTree = "<group>"; };
-		1CA507F5205FE51900C7F896 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
 		1CA507FC205FEF8A00C7F896 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1CA507FE205FF10E00C7F896 /* ale-lbs-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ale-lbs-Bridging-Header.h"; sourceTree = "<group>"; };
 		1CA507FF205FF10F00C7F896 /* Nao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nao.m; sourceTree = "<group>"; };
 		1CA50800205FF10F00C7F896 /* Nao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nao.h; sourceTree = "<group>"; };
 		1CA50802205FF67B00C7F896 /* SettingsBundleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBundleHelper.swift; sourceTree = "<group>"; };
+		1CD757C82126F68D0000BC50 /* Rainbow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Rainbow.framework; sourceTree = "<group>"; };
+		1CD757C92126F68E0000BC50 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
 		5569FF54873C5EA34A02E78C /* Pods_ale_lbs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ale_lbs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4444EC1D1B3619C8256BA9E /* Pods-ale-lbs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ale-lbs.release.xcconfig"; path = "Pods/Target Support Files/Pods-ale-lbs/Pods-ale-lbs.release.xcconfig"; sourceTree = "<group>"; };
 		D054FA0531327A60E5D6CC73 /* Pods-ale-lbs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ale-lbs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ale-lbs/Pods-ale-lbs.debug.xcconfig"; sourceTree = "<group>"; };
@@ -67,10 +63,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E6918D563C69EE09C3CE6F3 /* Pods_ale_lbs.framework in Frameworks */,
-				1CA507F4205FE50B00C7F896 /* Rainbow.framework in Frameworks */,
-				1CA507F6205FE51900C7F896 /* WebRTC.framework in Frameworks */,
-				1CA507FA205FEA5E00C7F896 /* Rainbow.framework in Frameworks */,
-				1CA507F7205FEA5900C7F896 /* WebRTC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,8 +110,8 @@
 		1CA507F2205FE4F500C7F896 /* Rainbow */ = {
 			isa = PBXGroup;
 			children = (
-				1CA507F5205FE51900C7F896 /* WebRTC.framework */,
-				1CA507F3205FE50B00C7F896 /* Rainbow.framework */,
+				1CD757C82126F68D0000BC50 /* Rainbow.framework */,
+				1CD757C92126F68E0000BC50 /* WebRTC.framework */,
 			);
 			path = Rainbow;
 			sourceTree = "<group>";

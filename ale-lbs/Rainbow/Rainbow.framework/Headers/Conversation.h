@@ -64,6 +64,13 @@ typedef NS_ENUM(NSInteger, ConversationType) {
  *  Conversation object
  */
 @interface Conversation : NSObject
+
+/**
+ *  Conversation Id
+ *  @see conversationId
+ */
+@property (nonatomic, readonly) NSString *conversationId;
+
 /**
  *  Conversation type
  *  @see ConversationType

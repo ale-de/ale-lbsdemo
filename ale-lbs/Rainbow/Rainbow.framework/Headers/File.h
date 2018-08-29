@@ -94,6 +94,10 @@ typedef NS_ENUM(NSInteger, FilterFileType) {
 @property (readonly) BOOL isDownloadAvailable;
 
 /**
+ *  @return `NO` if the download is Failed from server (at init we suppose that we can Download File, when the download failed this boolean is set to `NO`
+ */
+@property (readwrite) BOOL canDownloadFile;
+/**
  *  @return `YES` if the attchament is sent in offline Mode
  */
 @property  BOOL isOfflineAttachment;
@@ -109,5 +113,10 @@ typedef NS_ENUM(NSInteger, FilterFileType) {
  */
 
 @property  float value;
+
+/**
+ *  @return `YES` if the file has a preview in the cloud
+ */
+@property (readonly) BOOL hasThumbnailOnServer;
 
 @end
